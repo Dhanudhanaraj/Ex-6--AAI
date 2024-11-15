@@ -24,55 +24,48 @@ Step 5:Iterate through each word in the tokenized text.
 • Print the unique sets of synonyms and antonyms.
 ## Program:
 ```
+!pip install nltk
+
 import nltk
+#import wordnet
+nltk.download( 'punkt' )
+nltk.download('wordnet')
+from nltk.tokenize import word_tokenize
+nltk.download( 'averaged_perceptron_tagger' )
+nltk.download('punkt_tab')
+
+sentence=input ()
+
+https://colab.research.google.com/drive/1tAVjhge2LhGFz_bHNyhkmfpjg_Syk_Jv#scrollTo=V7Rn79_3Zxio
+
+# Print the parts of speech
+for word, tag in pos_tags:
+    print(word, tag)
+
+# Tokenize the sentence into words
+words = word_tokenize(sentence)
+# Identify the parts of speech for each word
+pos_tags= nltk.pos_tag(words)
+
 from nltk.corpus import wordnet
 
-# Download required NLTK resources
-nltk.download('punkt')
-nltk.download('averaged_perceptron_tagger')
-nltk.download('wordnet')
-nltk.download('punkt_tab')
-nltk.download('averaged_perceptron_tagger_eng')
-
-# Function to get synonyms of a word using WordNet
-def get_synonyms(word):
-    synonyms = set()
-    for syn in wordnet.synsets(word):
-        for lemma in syn.lemmas():
-            synonyms.add(lemma.name())
-    return synonyms
-
-# Function to process a text file (optional usage)
-def process_text_file(file_path):
-    with open(file_path, 'r') as file:
-        text = file.read()
-    return text  # Return the processed text
-
-# Input the text to analyze
-text = input("Enter the text to analyze: ")
-
-# Tokenize the text into sentences
-sentences = nltk.sent_tokenize(text)
-
-# Loop through each sentence
-for sentence in sentences:
-    # Tokenize each sentence into words
-    words = nltk.word_tokenize(sentence)
-
-    # Perform part-of-speech tagging
-    pos_tags = nltk.pos_tag(words)
-
-    # Extract verbs (POS tags starting with 'V' are verbs)
-    verbs = [word for word, pos in pos_tags if pos.startswith('V')]
-
-    # Get synonyms for each verb and print them
-    for verb in verbs:
-        synonyms = get_synonyms(verb)
-        print(f"Verb: {verb}")
-        print(f"Synonyms: {', '.join(synonyms) if synonyms else 'No synonyms found'}\n")
+# Identify synonyms and antonyms for each word
+synonyms =[]
+antonyms =[]
+for word in words:
+	for syn in wordnet.synsets(word) :
+		for lemma in syn.lemmas():
+			synonyms . append (lemma . name( ) )
+			if lemma . antonyms():
+				antonyms . append ( lemma. antonyms ( ) [0] . name ( ) )
+# Print the synonyms and antonyms
+print ( "Synonyms : " ,set (synonyms) )
+print ( "Antonyms : " ,set(antonyms) )
 ```
 ## Output
-![o1](https://github.com/user-attachments/assets/9af8e1ca-4493-46b7-a4da-8753ac591563)
+![Screenshot 2024-11-15 122505](https://github.com/user-attachments/assets/35218563-8b5e-49f1-a127-aae3195d2cc0)
+
+![Screenshot 2024-11-15 122524](https://github.com/user-attachments/assets/6ea36faf-4bad-4c87-9f9e-b18cd335eb13)
 
 ## Result:
 Thus ,the program to perform the Parts of Speech identification and Synonymis executed sucessfully.
